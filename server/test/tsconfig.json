@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "outDir": "./test",
+    "noImplicitAny": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noEmitOnError": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "alwaysStrict": true,
+    "declaration": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+  },
+  "include": ["./**/*.ts"],
+  "exclude": [
+    "node_modules",
+  ]
+}
+

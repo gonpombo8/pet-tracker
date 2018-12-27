@@ -1,0 +1,11 @@
+# Logs
+*.DS_Store
+*.log
+npm-debug.log*
+
+# Dirs
+node_modules
+dist
+
+# Config
+config/development.json

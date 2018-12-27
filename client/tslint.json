@@ -1,0 +1,16 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-react"],
+  "rules": {
+    "arrow-return-shorthand": true,
+    "jsx-alignment": false,
+    "jsx-boolean-value": [true, "never"],
+    "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
+    "import-name": false,
+    "variable-name": ["allow-pascal-case"],
+    "max-line-length": [true, 80],
+    "no-console": true,
+    "no-debugger": true,
+    "no-trailing-whitespace": true,
+  }
+}

@@ -1,0 +1,12 @@
+# Logs
+*.DS_Store
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Dirs
+node_modules
+dist
+
+# Config
+config/development.json

@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es2016",
+    "allowJs": true,
+    "skipLibCheck": false,
+    "jsx": "preserve",
+    "isolatedModules": true
+  },
+  "include": [
+    "src"
+  ]
+}

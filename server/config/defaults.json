@@ -1,0 +1,17 @@
+{
+  "env": "development",
+  "endpoints": {
+    "webapp": "http://localhost:8080"
+  },
+  "jwt": {
+    "secret": "some-secret-jwt-password",
+    "expiration": "10hr"
+  },
+  "mongo": {
+    "url": "mongodb://localhost:27017",
+    "db": "petracker"
+  },
+  "port": 3000,
+  "passwordSalt": "some super secret password salt",
+  "version": "some-sha-commit-?"
+}

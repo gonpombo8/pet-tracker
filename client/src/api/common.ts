@@ -7,7 +7,7 @@ interface Query {
   [key: string]: string;
 }
 
-const headers = {
+export const headers = {
   get: () => ({
     Accept: 'application/json',
   }),
@@ -52,7 +52,7 @@ const parseToJSON = (response: Response) => {
   return response;
 };
 
-const api = (url: string, args: RequestInit = {}) => {
+export const api = (url: string, args: RequestInit = {}) => {
   args.headers =  args.headers || {};
 
   return fetch(`${getEndpoints().api}${url}`, args)
@@ -69,7 +69,7 @@ const catchError = (url: string, method = 'GET') => (error: Error) => {
   throw error;
 };
 
-const authenticatedApi = (
+export const authenticatedApi = (
   url: string,
   args: RequestInit = {},
 ) => {
@@ -110,6 +110,17 @@ export const authenticatedPost = <Payload = any, Response = any>
       url,
       {
         method: 'POST',
+        headers: headers.post(),
+        body: JSON.stringify(payload),
+      },
+    );
+
+export const authenticatedPut = <Payload = any, Response = any>
+  (url: string, payload: Payload): Promise<Response> =>
+    authenticatedApi(
+      url,
+      {
+        method: 'PUT',
         headers: headers.post(),
         body: JSON.stringify(payload),
       },

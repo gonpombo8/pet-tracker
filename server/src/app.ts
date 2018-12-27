@@ -3,6 +3,7 @@ import compression from 'compression';
 import cors from 'cors';
 import config from 'dos-config';
 import errorHandler from 'errorhandler';
+import morgan from 'morgan';
 
 import asyncApp, { Req } from './core/async-app';
 import prodErrorHandler from './core/error/error-handler-middleware';
@@ -12,11 +13,21 @@ import usersApi from './api/users';
 import petsApi from './api/pets';
 
 const app = asyncApp();
-
 app.use(cors({ origin: config.endpoints.webapp }));
 app.use(bodyparser.json({ limit: '10mb' }));
 app.use(compression());
 app.use(jwt);
+
+// MORGAN LOGGER
+morgan.token(
+  'username',
+  (req: any) => (req.claims ? `user: ${req.claims.username}` : 'visitor'),
+);
+morgan.token('body', req => JSON.stringify(req.body));
+app.use(
+  morgan(':method :url :status :username :body'),
+);
+// MORGAN LOGGER
 
 app.get(
   '/ping',

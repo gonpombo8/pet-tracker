@@ -51,12 +51,12 @@ export const find = <T>(collectionName: string) =>
     return collection.find(criteria).toArray();
   };
 
-export const update = <T>(collectionName: string) =>
+export const updateOne = <T>(collectionName: string) =>
   async (criteria: Criteria<T>, changes: Changes): Promise<void> => {
     const opts = { multi: true, upsert: true };
     const collection = await getCollection<T>(collectionName);
 
-    await collection.update(criteria, changes, opts);
+    await collection.updateOne(criteria, changes, opts);
   };
 
 export const create = <T>(collectionName: string) =>

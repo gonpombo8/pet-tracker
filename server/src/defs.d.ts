@@ -2,6 +2,12 @@ declare module 'dos-config' {
   const config: Config;
 
   export interface Config {
+    cloudImage: {
+      name: string;
+      apiKey: string;
+      apiSecret: string;
+      envVar: string;
+    };
     env: string;
     endpoints: { webapp: string };
     jwt: {
@@ -18,6 +24,16 @@ declare module 'dos-config' {
   }
 
   export default config;
+}
+
+declare module 'cloudinary' {
+  function any(): any;
+  export = any;
+}
+
+declare module 'multer-storage-cloudinary' {
+  function any(): any;
+  export = any;
 }
 
 declare module 'express-jwt' {

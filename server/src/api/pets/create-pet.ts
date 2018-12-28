@@ -3,7 +3,7 @@ import loadPet, { Pet } from '../../models/pet';
 import { insertPet } from '../../controllers/pet';
 
 interface Body {
-  birthdate: Pet['birthdate'];
+  birthdate?: Pet['birthdate'];
   name: Pet['name'];
   type: Pet['type'];
 }

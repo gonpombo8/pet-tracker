@@ -1,4 +1,10 @@
 {
+  "cloudImage": {
+    "name": "",
+    "apiKey": "",
+    "apiSecret": "",
+    "envVar": ""
+  },
   "env": "development",
   "endpoints": {
     "webapp": "http://localhost:8080"

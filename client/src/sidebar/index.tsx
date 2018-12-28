@@ -70,6 +70,11 @@ const styles = (theme: any) => ({
   },
   items: {
     fontSize: '1.2rem'
+  },
+  logOut: {
+    position: 'fixed' as 'fixed',
+    bottom: 0,
+    width: drawerWidth,
   }
 });
 
@@ -81,11 +86,6 @@ const Tabs = [{
   icon: SettingsIcon,
   text: 'Settings',
   to: '/settings',
-}, {
-  divider: true,
-  icon: SettingsPower,
-  text: 'Log out',
-  to: '/bye',
 }]
 
 class SideBar extends React.Component<PropTypes> {
@@ -115,8 +115,7 @@ class SideBar extends React.Component<PropTypes> {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {Tabs.map((v, k) => [
-            v.divider && <Divider key={k} className={classes.divider} />,
+          {Tabs.map((v, k) =>
             <ListItem
               selected={this.isSelected(v.to)}
               button
@@ -126,11 +125,30 @@ class SideBar extends React.Component<PropTypes> {
               <ListItemIcon>
                 <v.icon />
               </ListItemIcon>
-              <ListItemText classes={{ primary: classes.items }} primary={v.text} />
+              <ListItemText
+                classes={{ primary: classes.items }}
+                primary={v.text}
+              />
             </ListItem>
-          ])}
+          )}
         </List>
-        <Divider />
+        <div className={classes.logOut}>
+          <List >
+            <ListItem
+              selected={this.isSelected('/bye')}
+              button
+              onClick={this.handleClick('/bye')}
+            >
+              <ListItemIcon>
+                <SettingsPower />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ primary: classes.items }}
+                primary="Log out"
+              />
+            </ListItem>
+          </List>
+        </div>
       </div>
     );
 

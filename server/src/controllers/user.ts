@@ -1,4 +1,4 @@
-import { create, Changes, Criteria, find, findOne, update } from '../db';
+import { create, Changes, Criteria, find, findOne, updateOne } from '../db';
 import parseUser, { DbUser, User } from '../models/user';
 
 const COLLECTION = 'users';
@@ -17,7 +17,7 @@ export const updateUser = async (
   criteria: Criteria<DbUser>,
   changes: Changes<Partial<User>>,
 ) => {
-  await update<DbUser>(COLLECTION)(criteria, changes);
+  await updateOne<DbUser>(COLLECTION)(criteria, changes);
 };
 
 export const createUser = async (user: Partial<User>) => {

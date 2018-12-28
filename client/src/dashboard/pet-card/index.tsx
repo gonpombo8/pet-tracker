@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-import { uploadAvatar } from 'src/api/pet';
+import { Pet, uploadAvatar } from 'src/api/pet';
 
 const styles = {
   card: {
@@ -27,11 +27,13 @@ const styles = {
 
 interface PropTypes {
   classes: { [key: string]: string };
+  onChange: (p: Partial<Pet>) => void;
+  value: Pet;
 }
 
-class PetCard extends React.Component<PropTypes> {
-  state = { url: '/placeholder.jpg' };
+const avatarPlaceholder = (type: Pet['type']) => `/${type}-placeholder.jpg`;
 
+class PetCard extends React.Component<PropTypes> {
   inputRef: React.RefObject<HTMLInputElement> = React.createRef()
 
   handleClickPhoto = () => {
@@ -41,17 +43,22 @@ class PetCard extends React.Component<PropTypes> {
   }
 
   handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { onChange, value } = this.props;
     const file = e.target.files && e.target.files[0];
+    const backupAvatar = value.avatar;
 
     if (!file) return;
-
-    this.setState({ url: URL.createObjectURL(file) });
-    await uploadAvatar('petId', file);
+    onChange({ avatar: URL.createObjectURL(file) });
+    try {
+      const { avatar } = await uploadAvatar(value.username, file);
+      onChange({ avatar });
+    } catch (e) {
+      onChange({ avatar: backupAvatar });
+    }
   }
 
   render() {
-    const { classes } = this.props;
-    const { url } = this.state;
+    const { classes, value } = this.props;
     return <div className="pet-card">
       <Card className={classes.card}>
         <input
@@ -64,13 +71,11 @@ class PetCard extends React.Component<PropTypes> {
         <CardMedia
           onClick={this.handleClickPhoto}
           className={classes.media}
-          image={url}
+          image={value.avatar || avatarPlaceholder(value.type)}
           title="Contemplative Reptile"
         />
         <CardContent>
-          Lizard
-          Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-          across all continents except Antarctica
+          Name: { value.name }
         </CardContent>
         <CardActions>
           <Button size="small" color="primary">

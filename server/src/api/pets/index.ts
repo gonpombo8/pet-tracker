@@ -1,6 +1,5 @@
-import multer from 'multer';
-
 import asyncApp, { Req } from '../../core/async-app';
+import parser from '../../core/upload';
 import load from '../load';
 import can from '../can';
 import createPet from './create-pet';
@@ -9,8 +8,6 @@ import getPet from './get-pet';
 import uploadAvatar from './upload-avatar';
 
 const app = asyncApp();
-
-const upload = multer({ dest: '/' });
 
 app.get(
   '/',
@@ -33,7 +30,7 @@ app.post(
   '/',
   'Creates a new pet for the user',
   {
-    birthdate: 'number',
+    birthdate: 'number?',
     name: 'string',
     type: '"dog"|"cat"',
   },
@@ -49,10 +46,19 @@ app.put(
     file: 'any',
   },
   load.authenticated,
-  upload.single('avatar'),
-  // load.pet.fromParams(),
-  // can.view.pet(),
-  (req: Req) => uploadAvatar(req.pet, (req as any).file),
+  load.pet.fromParams(),
+  can.view.pet(),
+  // OMG a middleware.
+  // We hate magic middlewares but let the parser do all this upload stuff
+  // 🎸🦖
+  parser.single('avatar'),
+  // End of the magic 🙈
+  // Oh yeah
+  (req: Req) => uploadAvatar(
+    req.pet,
+    // Middlewares fault.
+    (req as any).file,
+  ),
 );
 
 export default app;

@@ -1,7 +1,7 @@
 // Fields that are present in both the DB and the Model
 export interface CommonProps {
   avatar?: string;
-  birthdate: number;
+  birthdate?: number;
   name: string;
   userId: string;
   type: 'dog' | 'cat';

@@ -1,11 +1,17 @@
-import { badRequest } from 'async-app';
-
 import { Pet } from '../../models/pet';
+import { updatePet } from '../../controllers/pet';
 
-export default (pet: Pet, file: any) => {
-  if (file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-    throw badRequest('INVALID AVATAR');
-  }
+interface File {
+  secure_url: string;
+}
 
-  return pet && file;
+export default async ({ username }: Pet, file: File) => {
+  const { secure_url: secureUrl } = file;
+
+  await updatePet(
+    { username },
+    { $set: { avatar: secureUrl } },
+  );
+
+  return { avatar: secureUrl };
 };

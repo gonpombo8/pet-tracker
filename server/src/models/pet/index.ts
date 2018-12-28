@@ -5,7 +5,10 @@ export type Pet = Model;
 export type PetRecord = Record;
 
 export default (record: Record): Pet => {
-  const props = parseModel(record);
+  const props = {
+    ...parseModel(record),
+    _id: undefined,
+  };
 
   return {
     ...props,

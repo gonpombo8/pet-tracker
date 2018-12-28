@@ -1,4 +1,4 @@
-import { create, Changes, Criteria, find, findOne, update } from '../db';
+import { create, Changes, Criteria, find, findOne, updateOne } from '../db';
 import loadPet, { PetRecord, Pet } from '../models/pet';
 
 const COLLECTION = 'pets';
@@ -17,7 +17,7 @@ export const updatePet = async (
   criteria: Criteria<PetRecord>,
   changes: Changes<Partial<Pet>>,
 ) => {
-  await update<PetRecord>(COLLECTION)(criteria, changes);
+  await updateOne<PetRecord>(COLLECTION)(criteria, changes);
 };
 
 export const insertPet = async (pet: Partial<Pet>) => {

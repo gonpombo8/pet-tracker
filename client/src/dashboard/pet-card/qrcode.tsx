@@ -30,13 +30,9 @@ class Qrcode extends React.Component<PropTypes> {
     const { onHide, pet } = this.props;
     return <Modal open={true} onClose={onHide}>
       <div>
-        <div className="align-center">
+        <div className="align-center column">
           <h2>QR CODE - {pet.name}</h2>
-        </div>
-        <div className="align-center">
           {url && <img src={url} alt="QR Code"/>}
-        </div>
-        <div className="align-center">
           Print this image and add it to your pet collar
         </div>
       </div>

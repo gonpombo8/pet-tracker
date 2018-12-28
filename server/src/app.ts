@@ -13,11 +13,19 @@ import usersApi from './api/users';
 import petsApi from './api/pets';
 
 const app = asyncApp();
+// ORIGIN CORS MIDDLEWARE
 app.use(cors({ origin: config.endpoints.webapp }));
+// PARSE REQ.BODY
 app.use(bodyparser.json({ limit: '10mb' }));
+// COMPRESS REQUESTS
 app.use(compression());
+// INITIALIZE JWT
 app.use(jwt);
-
+// NO CACHE MIDDLEWARE
+app.use((_, res, next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  next();
+});
 // MORGAN LOGGER
 morgan.token(
   'username',
@@ -27,8 +35,8 @@ morgan.token('body', req => JSON.stringify(req.body));
 app.use(
   morgan(':method :url :status :username :body'),
 );
-// MORGAN LOGGER
 
+// API V0 FTW 🎉
 app.get(
   '/ping',
   (req: Req) => ({

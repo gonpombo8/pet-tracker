@@ -1,5 +1,5 @@
 import { User } from '../../models/user';
 
-export default async (user: User) => {
+export default (user: User) => {
   return user.sendUser();
 };

@@ -5,7 +5,7 @@ export interface CommonProps {
   name: string;
   userId: string;
   type: 'dog' | 'cat';
-  qr: string;
+  qrcode: string;
   username: string;
 }
 

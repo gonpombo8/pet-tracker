@@ -10,30 +10,26 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import { Pet, uploadAvatar } from 'src/api/pet';
-
-const styles = {
-  card: {
-    maxWidth: 250,
-  },
-  input: {
-    visibility: 'hidden' as 'hidden',
-  },
-  media: {
-    cursor: 'pointer',
-    height: 200,
-    backgroundSize: 200,
-  },
-};
+import { User } from 'src/api/user';
+import { withCache } from 'src/helpers/with-cache';
+import Qrcode from './qrcode';
 
 interface PropTypes {
   classes: { [key: string]: string };
   onChange: (p: Partial<Pet>) => void;
   value: Pet;
+  user: User;
+}
+
+interface StateTypes {
+  modal: 'qrcode' | 'edit' | 'remove' | '';
 }
 
 const avatarPlaceholder = (type: Pet['type']) => `/${type}-placeholder.jpg`;
 
-class PetCard extends React.Component<PropTypes> {
+class PetCard extends React.Component<PropTypes, StateTypes> {
+  state: StateTypes = { modal: '' };
+
   inputRef: React.RefObject<HTMLInputElement> = React.createRef()
 
   handleClickPhoto = () => {
@@ -57,9 +53,32 @@ class PetCard extends React.Component<PropTypes> {
     }
   }
 
+  handleHideModal = () => this.setState({ modal: '' });
+
+  handleOpenModal = withCache<StateTypes['modal'], () => void>((key) => () => {
+    this.setState({ modal: key });
+  });
+
+  renderModal = () => {
+    const { modal } = this.state;
+    const { user, value } = this.props;
+
+    switch (modal) {
+      case 'qrcode':
+        return <Qrcode
+          onHide={this.handleHideModal}
+          pet={value}
+          user={user}
+        />
+      default:
+        return null;
+    }
+  }
+
   render() {
     const { classes, value } = this.props;
     return <div className="pet-card">
+      {this.renderModal()}
       <Card className={classes.card}>
         <input
           accept="image/*"
@@ -72,19 +91,31 @@ class PetCard extends React.Component<PropTypes> {
           onClick={this.handleClickPhoto}
           className={classes.media}
           image={value.avatar || avatarPlaceholder(value.type)}
-          title="Contemplative Reptile"
+          title={value.name}
         />
         <CardContent>
           Name: { value.name }
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            onClick={this.handleOpenModal('qrcode')}
+          >
             QR Code
           </Button>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            onClick={this.handleOpenModal('edit')}
+          >
             Edit
           </Button>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            onClick={this.handleOpenModal('remove')}
+          >
             Remove
           </Button>
         </CardActions>
@@ -92,5 +123,19 @@ class PetCard extends React.Component<PropTypes> {
     </div>
   }
 }
+
+const styles = {
+  card: {
+    maxWidth: 250,
+  },
+  input: {
+    visibility: 'hidden' as 'hidden',
+  },
+  media: {
+    cursor: 'pointer',
+    height: 200,
+    backgroundSize: 200,
+  },
+};
 
 export default withStyles(styles)(PetCard);

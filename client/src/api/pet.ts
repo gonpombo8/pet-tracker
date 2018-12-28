@@ -11,7 +11,7 @@ export interface Pet {
   name: string;
   userId: string;
   type: 'dog' | 'cat';
-  qr: string;
+  qrcode: string;
   username: string;
 }
 

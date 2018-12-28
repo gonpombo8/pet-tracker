@@ -12,12 +12,12 @@ type PrePet = Pick<
 >;
 
 export default async (pre: PrePet): Promise<Record> => {
-  const qr = uuid();
+  const qrcode = uuid();
   const username = await generateUsername(pre.name);
 
   return {
     ...pre,
-    qr,
+    qrcode,
     username,
   };
 };

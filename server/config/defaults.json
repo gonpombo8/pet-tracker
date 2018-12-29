@@ -9,6 +9,9 @@
   "endpoints": {
     "webapp": "http://localhost:8080"
   },
+  "googleMaps": {
+    "apiKey": ""
+  },
   "jwt": {
     "secret": "some-secret-jwt-password",
     "expiration": "10hr"

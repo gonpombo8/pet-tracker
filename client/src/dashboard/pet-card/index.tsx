@@ -10,7 +10,6 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import { Pet, uploadAvatar } from 'src/api/pet';
-import { User } from 'src/api/user';
 import { withCache } from 'src/helpers/with-cache';
 import Qrcode from './qrcode';
 
@@ -18,7 +17,6 @@ interface PropTypes {
   classes: { [key: string]: string };
   onChange: (p: Partial<Pet>) => void;
   value: Pet;
-  user: User;
 }
 
 interface StateTypes {
@@ -61,14 +59,13 @@ class PetCard extends React.Component<PropTypes, StateTypes> {
 
   renderModal = () => {
     const { modal } = this.state;
-    const { user, value } = this.props;
+    const { value } = this.props;
 
     switch (modal) {
       case 'qrcode':
         return <Qrcode
           onHide={this.handleHideModal}
           pet={value}
-          user={user}
         />
       default:
         return null;

@@ -1,6 +1,7 @@
 import asyncApp, { Req } from '../../core/async-app';
 
 import load from '../load';
+import can from '../can';
 import authenticate from './authenticate';
 import getUser from './get-user';
 import signup from './signup';
@@ -33,6 +34,18 @@ app.post(
   'Authenticates a user by email and password',
   { email: 'email', password: 'string' },
   (req: Req) => authenticate(req.body),
+);
+
+
+app.patch(
+  '/:userId',
+  'Updates user',
+  {
+
+  },
+  load.authenticated,
+  load.user.fromClaimsO(),
+  can.edit.user(),
 );
 
 export default app;

@@ -1,4 +1,4 @@
-import { authenticatedGet, authenticatedPost } from './common';
+import { authenticatedGet, authenticatedPost, post } from './common';
 import { setSession } from './session-storage'
 
 export interface User {
@@ -17,7 +17,7 @@ export const getMe = (): Promise<User> =>
   authenticatedGet('/api/v0/users');
 
 export const authenticate = (email: string, password: string): Promise<Jwt> =>
-  authenticatedPost(
+  post(
     '/api/v0/users/authenticate',
     { email, password },
   ).then((jwt: Jwt) => {

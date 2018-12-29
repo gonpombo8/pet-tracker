@@ -39,7 +39,6 @@ class Dashboard extends React.PureComponent<PropTypes, StateTypes> {
   }
 
   render() {
-    const { user } = this.props;
     const { pets } = this.state;
     return <div className="dashboard">
       <AddPet
@@ -50,7 +49,6 @@ class Dashboard extends React.PureComponent<PropTypes, StateTypes> {
           <PetCard
             onChange={this.handleChange(pet.username)}
             value={pet}
-            user={user}
             key={pet.username}
           />,
         )}

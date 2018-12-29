@@ -125,3 +125,14 @@ export const authenticatedPut = <Payload = any, Response = any>
         body: JSON.stringify(payload),
       },
     );
+
+export const authenticatedPatch = <Payload = any, Response = any>
+  (url: string, payload: Payload): Promise<Response> =>
+    authenticatedApi(
+      url,
+      {
+        method: 'PATCH',
+        headers: headers.post(),
+        body: JSON.stringify(payload),
+      },
+    );

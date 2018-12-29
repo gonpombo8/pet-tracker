@@ -40,7 +40,7 @@ class SignIn extends React.PureComponent<PropTypes, StateTypes> {
     const { email, password } = this.state;
     try {
       await authenticate(email, password)
-      history.push('/dashboard');
+      history.push('/');
     } catch(_) {
       this.setState({ error: true });
     }

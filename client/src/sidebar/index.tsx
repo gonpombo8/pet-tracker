@@ -1,6 +1,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles'; import {
+import { withStyles } from '@material-ui/core/styles';
+import {
   AppBar,
   CssBaseline,
   Divider,
@@ -14,11 +15,11 @@ import { withStyles } from '@material-ui/core/styles'; import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-
 import {
   Home as HomeIcon,
   Settings as SettingsIcon,
   Menu as MenuIcon,
+  Notifications as NotificationIcon,
   SettingsPower,
 } from '@material-ui/icons';
 
@@ -32,52 +33,6 @@ export interface PropTypes extends RouteComponentProps {
   theme: any;
 }
 
-const drawerWidth = 220;
-
-const styles = (theme: any) => ({
-  divider: {
-    marginTop: '1rem',
-    marginBottom: '1rem',
-  },
-  root: {
-    display: 'flex',
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
-  },
-  menuButton: {
-    marginRight: 20,
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-  },
-  items: {
-    fontSize: '1.2rem'
-  },
-  logOut: {
-    position: 'fixed' as 'fixed',
-    bottom: 0,
-    width: drawerWidth,
-  }
-});
-
 const Tabs = [{
   icon: HomeIcon,
   text: 'Dashboard',
@@ -86,6 +41,10 @@ const Tabs = [{
   icon: SettingsIcon,
   text: 'Settings',
   to: '/settings',
+}, {
+  icon: NotificationIcon,
+  text: 'Notifications',
+  to: '/notifications',
 }]
 
 class SideBar extends React.Component<PropTypes> {
@@ -117,12 +76,13 @@ class SideBar extends React.Component<PropTypes> {
         <List>
           {Tabs.map((v, k) =>
             <ListItem
+              className={classes.itemActionable}
               selected={this.isSelected(v.to)}
               button
               key={k + 1}
               onClick={this.handleClick(v.to)}
             >
-              <ListItemIcon>
+              <ListItemIcon className={classes.items} >
                 <v.icon />
               </ListItemIcon>
               <ListItemText
@@ -135,11 +95,12 @@ class SideBar extends React.Component<PropTypes> {
         <div className={classes.logOut}>
           <List >
             <ListItem
+              className={classes.itemActionable}
               selected={this.isSelected('/bye')}
               button
               onClick={this.handleClick('/bye')}
             >
-              <ListItemIcon>
+              <ListItemIcon className={classes.items}>
                 <SettingsPower />
               </ListItemIcon>
               <ListItemText
@@ -203,5 +164,57 @@ class SideBar extends React.Component<PropTypes> {
     </div>
   }
 }
+
+const DRAWER_WIDTH = 220;
+const styles = (theme: any) => ({
+  divider: {
+    marginTop: '1rem',
+    marginBottom: '1rem',
+  },
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: DRAWER_WIDTH,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    marginLeft: DRAWER_WIDTH,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    },
+  },
+  menuButton: {
+    marginRight: 20,
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: DRAWER_WIDTH,
+    backgroundColor: '#18202c',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+  },
+  items: {
+    fontSize: '1.4rem',
+    color: 'rgba(255, 255, 255, 0.7)',
+  },
+  itemActionable: {
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    },
+  },
+  logOut: {
+    position: 'fixed' as 'fixed',
+    bottom: 0,
+    width: DRAWER_WIDTH,
+  }
+});
 
 export default withStyles(styles, { withTheme: true })(SideBar)

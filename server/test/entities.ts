@@ -34,7 +34,7 @@ const pet = mongodb<PetRecord, 'username'>(
       _id: faker.random.uuid(),
       birthdate: faker.random.number(),
       userId: '',
-      qr: `${faker.random.number()}`,
+      qrcode: `${faker.random.number()}`,
       username: generateUsername(faker.internet.userName()),
       name: faker.internet.userName(),
       type: 'dog',

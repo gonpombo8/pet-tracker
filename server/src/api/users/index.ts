@@ -5,6 +5,7 @@ import can from '../can';
 import authenticate from './authenticate';
 import getUser from './get-user';
 import signup from './signup';
+import updateUser from './update-user';
 
 const app = asyncApp();
 
@@ -36,16 +37,19 @@ app.post(
   (req: Req) => authenticate(req.body),
 );
 
-
 app.patch(
-  '/:userId',
+  '/',
   'Updates user',
   {
-
+    address: 'string?',
+    name: 'string?',
+    phone: 'string?',
+    surname: 'string?',
   },
   load.authenticated,
-  load.user.fromClaimsO(),
+  load.user.fromClaims(),
   can.edit.user(),
+  (req: Req) => updateUser(req.user, req.body),
 );
 
 export default app;

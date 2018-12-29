@@ -1,4 +1,9 @@
-import { authenticatedGet, authenticatedPost, post } from './common';
+import {
+  authenticatedGet,
+  authenticatedPost,
+  authenticatedPatch,
+  post,
+} from './common';
 import { setSession } from './session-storage'
 
 export interface User {
@@ -6,6 +11,8 @@ export interface User {
   name: string;
   surname: string;
   username: string;
+  phone: string;
+  address: string;
 }
 
 interface Jwt {
@@ -37,3 +44,6 @@ export const createUser = (user: {
     setSession(jwt);
     return jwt;
   });
+
+export const updateUser = (changes: Partial<User>): Promise<void> =>
+  authenticatedPatch('/api/v0/users', changes);

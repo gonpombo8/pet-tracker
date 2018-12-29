@@ -7,10 +7,7 @@ export interface User extends U, Methods {}
 export type DbUser = DbUser;
 
 export default (record: DbUser): User => {
-  const props = {
-    ...parseModel(record),
-    _id: undefined,
-  };
+  const props = parseModel(record);
 
   return {
     ...props,

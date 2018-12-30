@@ -5,6 +5,7 @@ import can from '../can';
 import createPet from './create-pet';
 import getPets from './get-pets';
 import getPet from './get-pet';
+import getPetQrcode from './get-pet-qrcode';
 import uploadAvatar from './upload-avatar';
 
 const app = asyncApp();
@@ -24,6 +25,14 @@ app.get(
   load.pet.fromParams(),
   can.view.pet(),
   (req: Req) => getPet(req.pet),
+);
+
+app.get(
+  '/:petId/:qrcode',
+  'Returns pet and user fields for the specified pet&qrcode',
+  load.pet.fromParams(),
+  load.user.fromPet(),
+  (req: Req) => getPetQrcode(req.user, req.pet, req.params.qrcode),
 );
 
 app.post(

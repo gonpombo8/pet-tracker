@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Pet, uploadAvatar } from 'src/api/pet';
 import { withCache } from 'src/helpers/with-cache';
+import petAvatar from 'src/helpers/pet-avatar';
 import Qrcode from './qrcode';
 
 interface PropTypes {
@@ -22,8 +23,6 @@ interface PropTypes {
 interface StateTypes {
   modal: 'qrcode' | 'edit' | 'remove' | '';
 }
-
-const avatarPlaceholder = (type: Pet['type']) => `/${type}-placeholder.jpg`;
 
 class PetCard extends React.Component<PropTypes, StateTypes> {
   state: StateTypes = { modal: '' };
@@ -87,7 +86,7 @@ class PetCard extends React.Component<PropTypes, StateTypes> {
         <CardMedia
           onClick={this.handleClickPhoto}
           className={classes.media}
-          image={value.avatar || avatarPlaceholder(value.type)}
+          image={petAvatar(value.avatar, value.type)}
           title={value.name}
         />
         <CardContent className="card-content">

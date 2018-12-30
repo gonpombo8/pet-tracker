@@ -13,4 +13,8 @@ export default {
     req => req.claims.username,
     'user',
   ),
+  fromPet: () => loadUser(
+    req => req.pet.userId,
+    'user',
+  ),
 };

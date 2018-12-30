@@ -1,7 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode';
 
-import { getEndpoints } from 'src/api/config'
 import { Pet } from 'src/api/pet'
 import Modal from 'src/ui/modal';
 
@@ -16,8 +15,8 @@ class Qrcode extends React.Component<PropTypes> {
 
   async componentDidMount() {
     const { pet } = this.props;
-    const { api } = getEndpoints();
-    const url = `${api}/qrcode/${pet.username}/${pet.qrcode}`;
+    const host = window.location.origin;
+    const url = `${host}/qrcode/${pet.username}/${pet.qrcode}`;
     const qrcodeSrc = await QRCode.toDataURL(url);
 
     this.setState({ url: qrcodeSrc });

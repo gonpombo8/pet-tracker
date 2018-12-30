@@ -6,7 +6,7 @@ const getPosition = (options: any = {}) =>
 const parseError = (error: PositionError) => {
   switch(error.code) {
     case error.PERMISSION_DENIED:
-      return 'Accept the request for geolocation to notifiy the pet owner';
+      return 'Accept the location request to notifiy the pet owner';
     case error.POSITION_UNAVAILABLE:
       return 'Location information is unavailable. Contact the pet owner.';
     case error.TIMEOUT:

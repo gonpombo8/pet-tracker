@@ -35,6 +35,7 @@ class Settings extends React.PureComponent<PropTypes> {
   handleClick = async () => {
     const { user } = this.props;
     const { value } = this.state;
+
     this.props.onChange({ ...user, ...value });
     await updateUser(pick(value, PROPS));
   }

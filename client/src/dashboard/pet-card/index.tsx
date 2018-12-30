@@ -90,8 +90,8 @@ class PetCard extends React.Component<PropTypes, StateTypes> {
           image={value.avatar || avatarPlaceholder(value.type)}
           title={value.name}
         />
-        <CardContent>
-          Name: { value.name }
+        <CardContent className="card-content">
+          <span>{value.name}</span>
         </CardContent>
         <CardActions>
           <Button
@@ -130,8 +130,8 @@ const styles = {
   },
   media: {
     cursor: 'pointer',
-    height: 200,
-    backgroundSize: 200,
+    height: 180,
+    backgroundSize: 180,
   },
 };
 

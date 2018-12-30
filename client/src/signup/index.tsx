@@ -105,7 +105,6 @@ class SignIn extends React.PureComponent<PropTypes, StateTypes> {
             </InputLabel>
             <Input
               autoComplete="name"
-              autoFocus
               id="name"
               name="name"
               onChange={this.handleChange('name')}
@@ -118,7 +117,6 @@ class SignIn extends React.PureComponent<PropTypes, StateTypes> {
             </InputLabel>
             <Input
               autoComplete="surname"
-              autoFocus
               id="surname"
               name="surname"
               onChange={this.handleChange('surname')}

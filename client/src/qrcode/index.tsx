@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { Phone as PhoneIcon } from '@material-ui/icons';
 
-import { getPetInfoViaQr, PetUserQrcode } from 'src/api/pet';
+import { getPetInfoViaQr, PetUserQrcode, petPosition } from 'src/api/pet';
 import getPosition from 'src/helpers/get-position';
 import petAvatar from 'src/helpers/pet-avatar';
 import Loading from 'src/loading';
@@ -36,23 +36,24 @@ class Qrcode extends React.Component<PropTypes, StateTypes> {
   state: StateTypes = {};
 
   async componentDidMount() {
-    const pos = getPosition();
     const { petId, qrcode } = this.props.match.params;
     const resp = getPetInfoViaQr(petId, qrcode);
-    try {
-      const [
-        { error, position }, // pos promise response
-        { user, pet }, // qrcode promise response
-      ] = await Promise.all([pos, resp]);
-      this.setState({
-        error,
-        pet,
-        position,
-        user,
-      });
-    } catch (e) {
-      this.props.history.push('/');
-    }
+    const pos = getPosition();
+    const { user, pet } = await resp;
+
+    this.setState({ user, pet });
+
+    const { error, position } = await pos;
+    const positionPayload = position
+      ? {
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      }
+      : undefined;
+
+    await petPosition(petId, qrcode, positionPayload);
+
+    this.setState({ error, position });
   }
 
   render() {

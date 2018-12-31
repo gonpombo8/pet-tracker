@@ -4,6 +4,7 @@ import {
   authenticatedPost,
   get,
   headers,
+  post,
 } from './common';
 import { User } from './user';
 
@@ -30,6 +31,17 @@ export const getPetInfoViaQr = (
   qrcode: string,
 ): Promise<PetUserQrcode> =>
   get(`/api/v0/pets/${petId}/${qrcode}`);
+
+
+export const petPosition = (
+  petId: string,
+  qrcode: string,
+  position?: Pick<Position['coords'], 'latitude'|'longitude'>,
+): Promise<PetUserQrcode> =>
+  post(
+    `/api/v0/pets/${petId}/${qrcode}/position`,
+    position ? { position } : {},
+  );
 
 type PetPayload = Pick<Pet, 'name'|'type'|'birthdate'>
 export const createPet = (pet: PetPayload): Promise<Pet> =>

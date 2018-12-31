@@ -6,6 +6,7 @@ import createPet from './create-pet';
 import getPets from './get-pets';
 import getPet from './get-pet';
 import getPetQrcode from './get-pet-qrcode';
+import petFoundPosition from './pet-found-position';
 import uploadAvatar from './upload-avatar';
 
 const app = asyncApp();
@@ -33,6 +34,25 @@ app.get(
   load.pet.fromParams(),
   load.user.fromPet(),
   (req: Req) => getPetQrcode(req.user, req.pet, req.params.qrcode),
+);
+
+app.post(
+  '/:petId/:qrcode/position',
+  'Gets the position of the pet and sends a notification to the owner',
+  load.pet.fromParams(),
+  load.user.fromPet(),
+  {
+    'position?': {
+      latitude: 'number',
+      longitude: 'number',
+    },
+  },
+  (req: Req) => petFoundPosition(
+    req.user,
+    req.pet,
+    req.params.qrcode,
+    req.body.position,
+  ),
 );
 
 app.post(

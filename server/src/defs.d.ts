@@ -10,11 +10,18 @@ declare module 'dos-config' {
     };
     env: string;
     endpoints: { webapp: string };
+    googleMaps: {
+      apiKey: string;
+    };
     jwt: {
       secret: string;
       expiration: string;
     };
     port: string;
+    mailgun: {
+      apiKey: string;
+      domain: string;
+    };
     mongo: {
       db: string;
       url: string;

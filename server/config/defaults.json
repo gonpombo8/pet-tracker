@@ -16,6 +16,10 @@
     "secret": "some-secret-jwt-password",
     "expiration": "10hr"
   },
+  "mailgun": {
+    "apiKey": "5240d5cc6974ee540543089f5df9ed7a-49a2671e-4a411ab4",
+    "domain": "sandbox4b89cfac6fe6432aa91d94a11f3e39ba.mailgun.org"
+  },
   "mongo": {
     "url": "mongodb://localhost:27017",
     "db": "petracker"

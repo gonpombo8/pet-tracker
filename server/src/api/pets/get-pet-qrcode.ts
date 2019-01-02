@@ -8,7 +8,6 @@ export default (user: User, pet: Pet, qrcode: string) => {
     throw forbidden('INVALID_QRCODE');
   }
 
-  // TODO send email to the owner.
   return {
     user: {
       address: user.address,

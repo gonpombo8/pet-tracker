@@ -2,21 +2,32 @@ import { forbidden } from 'async-app';
 
 import { Pet } from '../../models/pet';
 import { User } from '../../models/user';
+import petFoundTemplate from '../../email-templates/pet-founded';
+import sendEmail from '../../helpers/send-email';
 
 interface Position {
   latitude?: number;
-  longitud?: number;
+  longitude?: number;
   error?: string;
 }
 
-export default (user: User, pet: Pet, qrcode: string, position: Position) => {
+export default async (
+  user: User,
+  pet: Pet,
+  qrcode: string,
+  position: Position,
+) => {
   if (pet.qrcode !== qrcode) {
     throw forbidden('INVALID_QRCODE');
   }
 
-  // TODO send email to the owner.
-  return {
-    position,
-    name: user.name,
-  };
+  const coords = `${position.latitude},${position.longitude}`;
+  const template = petFoundTemplate({
+    coords,
+    name: pet.name,
+    type: pet.type,
+  });
+  const subject = `Someone scans ${pet.name} qrcode`;
+
+  await sendEmail(user.email, subject, template);
 };

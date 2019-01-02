@@ -1,5 +1,4 @@
 import debug from 'debug';
-
 import app from './app';
 import { initDb } from './db';
 import server from './server';
